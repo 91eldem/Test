@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0b3cff"><meta name="apple-mobile-web-app-capable" content="yes"><title>Дневник Богдана</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0b3cff"><meta name="apple-mobile-web-app-capable" content="yes"><title>Дневник</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,700;1,900&family=Russo+One&family=Rubik:ital,wght@0,900&family=Oswald:wght@700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#0a12b0;--bg2:#0b3cff;--bg3:#18c4ff;--acc:#22d3ff;--hi:#e8141c;--ink:#fff}
@@ -258,6 +258,19 @@ body.ios::before,body.ios .bg::before,body.ios #bub{display:none!important}
 body.ios .bg{animation:none!important;filter:none!important}
 body.ios #fx{backdrop-filter:none!important}
 body.ios .ghost{animation:none}
+
+/* ===== встроенный музыкальный плеер ===== */
+.music-panel{position:fixed;z-index:80;top:68px;right:12px;width:min(330px,calc(100vw - 24px));padding:14px;background:rgba(5,10,58,.96);border:2px solid #22d3ff;box-shadow:6px 6px 0 #000;transform:translateY(-12px) scale(.96);opacity:0;pointer-events:none;transition:.18s ease}
+body.p5 .music-panel{background:rgba(0,0,0,.97);border-color:#e60012}
+.music-panel.open{transform:none;opacity:1;pointer-events:auto}
+.music-title{font-weight:900;font-size:14px;text-transform:uppercase;margin-bottom:8px}
+.music-select{width:100%;box-sizing:border-box;background:#050a3a;color:#fff;border:2px solid #fff;padding:9px;font:inherit;font-weight:700}
+body.p5 .music-select{background:#000;border-color:#e60012}
+.music-controls{display:flex;gap:8px;margin-top:9px}
+.music-controls button{flex:1;padding:9px 6px;border:2px solid #fff;background:#e8141c;color:#fff;font:inherit;font-weight:900;cursor:pointer}
+.music-controls button:nth-child(2){background:#22d3ff;color:#000}
+body.p5 .music-controls button:nth-child(2){background:#ffd400}
+.music-now{margin-top:8px;font-size:11px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body class="intro">
@@ -269,6 +282,20 @@ body.ios .ghost{animation:none}
   <div class="plate"><span>Привет, Богдан</span></div>
   <div class="ic"><button id="thm" aria-label="Тема (T)">◐</button><button id="ins" style="display:none" aria-label="Установить">⤓</button><button id="sfb" class="off" aria-label="Звуки интерфейса">♬</button><button id="fxb" aria-label="Анимации вкл/выкл (A)">✦</button><button id="snd" aria-label="Lofi (J)">♪</button></div>
 </header>
+<div class="music-panel" id="musicPanel">
+  <div class="music-title">Музыка</div>
+  <select class="music-select" id="musicSelect" aria-label="Выбор трека">
+    <option value="0">Beneath the Mask -rain-</option>
+    <option value="1">Memories of Summer</option>
+    <option value="2">No More What Ifs</option>
+  </select>
+  <div class="music-controls">
+    <button id="musicPlay">▶ Играть</button>
+    <button id="musicNext">Следующий ›</button>
+  </div>
+  <div class="music-now" id="musicNow">Трек не играет</div>
+</div>
+
 
 <section class="scr on" id="m-menu">
   <nav class="mm" id="mm"></nav>
@@ -391,37 +418,23 @@ for(var i=0;i<40;i++)B.push({x:Math.random(),y:Math.random(),r:2+Math.random()*7
 (function f(t){cx.clearRect(0,0,cv.width,cv.height);if(!lite&&!document.body.classList.contains("p5")&&!document.body.classList.contains("p4"))B.forEach(function(b){b.y-=b.v;if(b.y<-.05)b.y=1.05;
  cx.beginPath();cx.arc((b.x+Math.sin(t/1500+b.p)*.01)*cv.width,b.y*cv.height,b.r,0,6.28);cx.strokeStyle="rgba(255,255,255,.45)";cx.lineWidth=1.5;cx.stroke()});requestAnimationFrame(f)})(0);
 
-/* LOFI: генерируется в браузере (WebAudio), без файлов */
-var AC,master,on=false,timer,step=0,nextT=0,BPM=74;
-var CH=[[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]]; // Fmaj7 Em7 Dm7 Cmaj7
-var BS=[41,40,38,36],SC=[65,67,69,72,74,76,77];
-function fr(m){return 440*Math.pow(2,(m-69)/12)}
-function tone(m,t,d,type,v){var o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=fr(m);o.detune.value=Math.random()*14-7;
- g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05)}
-function nz(t,d,f,v,type){var n=AC.createBufferSource(),N=Math.floor(AC.sampleRate*d),b=AC.createBuffer(1,N,AC.sampleRate),a=b.getChannelData(0);for(var i=0;i<N;i++)a[i]=(Math.random()*2-1)*(1-i/N);
- n.buffer=b;var fl=AC.createBiquadFilter();fl.type=type;fl.frequency.value=f;var g=AC.createGain();g.gain.value=v;n.connect(fl);fl.connect(g);g.connect(master);n.start(t)}
-function kick(t){var o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(130,t);o.frequency.exponentialRampToValueAtTime(42,t+.12);g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.0001,t+.25);o.connect(g);g.connect(master);o.start(t);o.stop(t+.3)}
-function sched(){var q=60/BPM/4;
- while(nextT<AC.currentTime+.3){var st=step%16,bar=Math.floor(step/16)%4,t=nextT+((st%2)?q*.3:0);
-  if(st==0||st==10)kick(t);
-  if(st==4||st==12)nz(t,.16,1600,.12,"bandpass");
-  if(st%2==0)nz(t,.03,8000,st%4?.025:.05,"highpass");
-  if(st==0)CH[bar].forEach(function(m,i){tone(m+12,t+i*.025,q*15,"sine",.07);tone(m+24,t+i*.025,q*8,"triangle",.015)});
-  if(st==0||st==6||st==10)tone(BS[bar],t,q*4,"sine",.3);
-  if(st%2==0&&Math.random()<.16){var m=SC[Math.floor(Math.random()*SC.length)];tone(m,t,q*6,"triangle",.07)}
-  nextT+=q;step++}}
-function jazz(force){
- if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;AC=new C();master=AC.createGain();master.gain.value=0;
-  var lp=AC.createBiquadFilter();lp.type="lowpass";lp.frequency.value=2400;var d=AC.createDelay(),fb=AC.createGain();d.delayTime.value=.4;fb.gain.value=.32;
-  master.connect(lp);lp.connect(AC.destination);lp.connect(d);d.connect(fb);fb.connect(d);d.connect(AC.destination);
-  var N=AC.sampleRate*2,cb=AC.createBuffer(1,N,AC.sampleRate),ca=cb.getChannelData(0);for(var i=0;i<N;i++)ca[i]=Math.random()<.0012?(Math.random()*2-1)*.9:(Math.random()*2-1)*.03;
-  var cs=AC.createBufferSource();cs.buffer=cb;cs.loop=true;var hp=AC.createBiquadFilter();hp.type="highpass";hp.frequency.value=900;var cg=AC.createGain();cg.gain.value=.18;cs.connect(hp);hp.connect(cg);cg.connect(master);cs.start()}
- if(force===true&&on)return;
- on=!on;$("#snd").classList.toggle("off",!on);AC.resume();
- if(on){nextT=AC.currentTime+.1;master.gain.setTargetAtTime(.6,AC.currentTime,.5);timer=setInterval(sched,100)}
- else{master.gain.setTargetAtTime(0,AC.currentTime,.2);clearInterval(timer)}}
-$("#snd").classList.add("off");$("#snd").onclick=function(){jazz()};
-
+/* ===== музыка ===== */
+var musicTracks=[
+ {name:"Beneath the Mask -rain-",file:"music/beneath-the-mask-rain.mp3"},
+ {name:"Memories of Summer",file:"music/memories-of-summer.mp3"},
+ {name:"No More What Ifs",file:"music/no-more-what-ifs.mp3"}
+];
+var musicAudio=new Audio(),musicIndex=0,musicOpen=false;
+musicAudio.preload="metadata";musicAudio.volume=.55;
+try{musicIndex=Math.max(0,Math.min(musicTracks.length-1,parseInt(localStorage.musicTrack||"0",10)||0))}catch(e){}
+function setMusic(i,play){musicIndex=(i+musicTracks.length)%musicTracks.length;var t=musicTracks[musicIndex];musicAudio.src=t.file;musicAudio.load();$("#musicSelect").value=String(musicIndex);$("#musicNow").textContent=t.name;if(play)musicAudio.play().then(function(){updateMusicUI()}).catch(function(){});try{localStorage.musicTrack=String(musicIndex)}catch(e){}updateMusicUI()}
+function updateMusicUI(){var playing=!musicAudio.paused&&!musicAudio.ended;$("#musicPlay").textContent=playing?"Ⅱ Пауза":"▶ Играть";$("#snd").classList.toggle("off",!playing);$("#musicNow").textContent=(playing?"▶ ":"")+musicTracks[musicIndex].name}
+$("#snd").onclick=function(){musicOpen=!musicOpen;$("#musicPanel").classList.toggle("open",musicOpen);if(musicOpen){setMusic(musicIndex,false)}};
+$("#musicSelect").onchange=function(){setMusic(parseInt(this.value,10),false)};
+$("#musicPlay").onclick=function(){if(musicAudio.paused){musicAudio.play().then(updateMusicUI).catch(function(){})}else{musicAudio.pause();updateMusicUI()}};
+$("#musicNext").onclick=function(){setMusic(musicIndex+1,true)};
+musicAudio.addEventListener("ended",function(){setMusic(musicIndex+1,true)});
+setMusic(musicIndex,false);
 
 /* ===== больше анимаций ===== */
 function slam(){mm.classList.remove("sl");void mm.offsetWidth;[].forEach.call(mm.children,function(b,i){b.style.setProperty("--i",i)});mm.classList.add("sl")}
@@ -608,7 +621,7 @@ $("#ndl").onclick=function(){delete NOTES[nk];nsave();nclose();nrefresh()};$("#n
 document.addEventListener("click",function(e){var l=e.target.closest&&e.target.closest("#ls .les,#td .les,#tm .les");if(!l||!l.dataset.k)return;if(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10)return;nopen(l.dataset.k)});
 /* поделиться */
 function toast(m){var e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove("on")},1800)}
-function shareDay(i,f){var L=S[i][1].filter(function(l){return f=="all"||l[4]=="a"||l[4]==f}),t=S[i][0]+(f!="all"?" ("+PL[f]+")":"")+"\n"+L.map(function(l){var n=NOTES[i+"|"+l[0]+"|"+l[2]];return l[0]+"–"+l[1]+" "+l[2]+(l[3]?" ["+l[3]+"]":"")+(n?" 📝 "+n:"")}).join("\n")+"\n— Дневник Богдана";
+function shareDay(i,f){var L=S[i][1].filter(function(l){return f=="all"||l[4]=="a"||l[4]==f}),t=S[i][0]+(f!="all"?" ("+PL[f]+")":"")+"\n"+L.map(function(l){var n=NOTES[i+"|"+l[0]+"|"+l[2]];return l[0]+"–"+l[1]+" "+l[2]+(l[3]?" ["+l[3]+"]":"")+(n?" 📝 "+n:"")}).join("\n")+"\n— Дневник";
  if(navigator.share)navigator.share({text:t}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Скопировано ✓")},function(){toast("Не удалось скопировать")});else toast("Не удалось скопировать")}
 $("#shS").onclick=function(){shareDay(di,wk)};
 $("#shT").onclick=function(){var n=new Date(),i=tIdx(n);if(i<0){toast("Сегодня выходной");return}shareDay(i,par(n))};

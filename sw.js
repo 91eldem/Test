@@ -1,11 +1,14 @@
-const CACHE = 'bogdan-diary-pwa-v1';
+const CACHE = 'bogdan-diary-pwa-v2';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icon-192.png',
   './icon-512.png',
-  './icon.svg'
+  './icon.svg',
+  './music/beneath-the-mask-rain.mp3',
+  './music/memories-of-summer.mp3',
+  './music/no-more-what-ifs.mp3'
 ];
 
 self.addEventListener('install', event => {
