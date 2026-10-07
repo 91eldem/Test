@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0b3cff"><meta name="apple-mobile-web-app-capable" content="yes"><title>Биотехнология 26.4</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0b3cff"><meta name="apple-mobile-web-app-capable" content="yes"><title>Дневник Богдана</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,700;1,900&family=Russo+One&family=Rubik:ital,wght@0,900&family=Oswald:wght@700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#0a12b0;--bg2:#0b3cff;--bg3:#18c4ff;--acc:#22d3ff;--hi:#e8141c;--ink:#fff}
@@ -29,7 +29,7 @@ body.p5 .bg::before{content:"";position:absolute;right:-10vmax;top:2vmax;width:6
 /* ВЕРХ */
 .bar{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:10px}
 .plate{background:#000;border:2px solid #fff;padding:5px 20px;transform:skewX(-12deg);font-weight:900}
-.plate span{display:inline-block;transform:skewX(12deg)}
+.plate span{display:inline-block;transform:skewX(12deg);white-space:nowrap}@media(max-width:420px){.plate{padding:5px 12px;font-size:.85rem}}
 body.p5 .plate{background:#fff;color:#000;border-color:#000;box-shadow:5px 5px 0 var(--hi)}
 .ic{display:flex;gap:8px}
 .ic button{width:40px;height:40px;border-radius:50%;background:#000;border:2px solid #fff;font-size:1.1rem;font-style:normal;transition:rotate .2s}
@@ -266,7 +266,7 @@ body.ios .ghost{animation:none}
 <div class="ghost" id="ghost">Меню</div>
 
 <header class="bar">
-  <div class="plate"><span>Биотехнология 26.4</span></div>
+  <div class="plate"><span>Привет, Богдан</span></div>
   <div class="ic"><button id="thm" aria-label="Тема (T)">◐</button><button id="ins" style="display:none" aria-label="Установить">⤓</button><button id="sfb" class="off" aria-label="Звуки интерфейса">♬</button><button id="fxb" aria-label="Анимации вкл/выкл (A)">✦</button><button id="snd" aria-label="Lofi (J)">♪</button></div>
 </header>
 
@@ -296,9 +296,16 @@ body.ios .ghost{animation:none}
 
 <section class="scr" id="m-corps"><div class="box">
   <div class="ttl"><span>Корпуса</span></div>
-  <a class="card" target="_blank" rel="noopener" href="https://2gis.kz/karaganda/geo/11822584677009298/73.104312,49.818718"><span>Главный корпус</span><small>Открыть в 2GIS ►</small></a>
-  <a class="card" target="_blank" rel="noopener" href="https://2gis.kz/karaganda/geo/11822477302846367/73.104790,49.820658"><span>1 корпус</span><small>Открыть в 2GIS ►</small></a>
-  <a class="card" target="_blank" rel="noopener" href="https://2gis.kz/karaganda/geo/70000001033176236"><span>5 корпус</span><small>Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9C%D0%B0%D1%80%D0%BA%D1%81%D0%B0%2C%2010"><span>1 корпус (главное здание)</span><small>ул. Карла Маркса, 10 · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%A7%D0%B5%D1%82%D0%B0%D0%B5%D0%B2%D0%B0%2C%2018"><span>2 корпус</span><small>ул. Четаева, 18 · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%9B%D1%8C%D0%B2%D0%B0%20%D0%A2%D0%BE%D0%BB%D1%81%D1%82%D0%BE%D0%B3%D0%BE%2C%2015"><span>3 корпус</span><small>ул. Льва Толстого, 15 · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE%2C%2028/17"><span>4 корпус</span><small>ул. Горького, 28/17 · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9C%D0%B0%D1%80%D0%BA%D1%81%D0%B0%2C%2031/7"><span>5 корпус</span><small>ул. Карла Маркса, 31/7 · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%94%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D1%8C%D0%B5%D0%B2%D0%B0%2C%202%D0%B0"><span>6 корпус</span><small>ул. Дементьева, 2а · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%B0%D1%8F%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%B0%D1%8F%2C%2055"><span>7 корпус</span><small>ул. Большая Красная, 55 · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%A7%D0%B5%D1%82%D0%B0%D0%B5%D0%B2%D0%B0%2C%2018%D0%B0"><span>8 корпус</span><small>ул. Четаева, 18а · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BA%D0%BE%D0%BB%D0%BB%D0%B5%D0%B4%D0%B6%20%D0%9A%D0%90%D0%98%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%9A%D0%B0%D1%80%D0%BB%D0%B0%20%D0%9C%D0%B0%D1%80%D0%BA%D1%81%D0%B0%2C%2010"><span>Технический колледж (ТК)</span><small>ул. Карла Маркса, 10 (лит. 26) · Открыть в 2GIS ►</small></a>
+  <a class="card" target="_blank" rel="noopener" href="https://2gis.ru/kazan/search/%D0%9A%D0%90%D0%98-%D0%9E%D0%BB%D0%B8%D0%BC%D0%BF%2C%20%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C"><span>Спорткомплекс КАИ-Олимп (КСК)</span><small>Физкультура · Открыть в 2GIS ►</small></a>
   <button class="back" data-back>◄ Назад</button></div></section>
 
 <section class="scr" id="m-about"><div class="box">
@@ -601,7 +608,7 @@ $("#ndl").onclick=function(){delete NOTES[nk];nsave();nclose();nrefresh()};$("#n
 document.addEventListener("click",function(e){var l=e.target.closest&&e.target.closest("#ls .les,#td .les,#tm .les");if(!l||!l.dataset.k)return;if(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10)return;nopen(l.dataset.k)});
 /* поделиться */
 function toast(m){var e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove("on")},1800)}
-function shareDay(i,f){var L=S[i][1].filter(function(l){return f=="all"||l[4]=="a"||l[4]==f}),t=S[i][0]+(f!="all"?" ("+PL[f]+")":"")+"\n"+L.map(function(l){var n=NOTES[i+"|"+l[0]+"|"+l[2]];return l[0]+"–"+l[1]+" "+l[2]+(l[3]?" ["+l[3]+"]":"")+(n?" 📝 "+n:"")}).join("\n")+"\n— Биотехнология 26.4";
+function shareDay(i,f){var L=S[i][1].filter(function(l){return f=="all"||l[4]=="a"||l[4]==f}),t=S[i][0]+(f!="all"?" ("+PL[f]+")":"")+"\n"+L.map(function(l){var n=NOTES[i+"|"+l[0]+"|"+l[2]];return l[0]+"–"+l[1]+" "+l[2]+(l[3]?" ["+l[3]+"]":"")+(n?" 📝 "+n:"")}).join("\n")+"\n— Дневник Богдана";
  if(navigator.share)navigator.share({text:t}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Скопировано ✓")},function(){toast("Не удалось скопировать")});else toast("Не удалось скопировать")}
 $("#shS").onclick=function(){shareDay(di,wk)};
 $("#shT").onclick=function(){var n=new Date(),i=tIdx(n);if(i<0){toast("Сегодня выходной");return}shareDay(i,par(n))};
@@ -635,6 +642,9 @@ setInterval(function(){var d=new Date();if(!d.getHours()&&!d.getMinutes()&&!d.ge
 var dip;addEventListener("beforeinstallprompt",function(e){e.preventDefault();dip=e;$("#ins").style.display="";$("#dlb").style.display=""});
 $("#ins").onclick=$("#dlb").onclick=function(){if(dip){dip.prompt();dip=null;$("#ins").style.display="none";$("#dlb").style.display="none"}};
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")==0)navigator.serviceWorker.register("sw.js").catch(function(){});
+/* приветствие по времени суток */
+function greet(){var h=new Date().getHours(),w=h>=5&&h<12?"Доброе утро":h>=12&&h<18?"Добрый день":h>=18&&h<23?"Добрый вечер":"Доброй ночи",s=document.querySelector(".plate span"),x=w+", Богдан";if(s&&s.textContent!=x)s.textContent=x}
+greet();setInterval(greet,60000);
 buildMenu();cmd();slam();tickNow();
 </script>
 </body>
