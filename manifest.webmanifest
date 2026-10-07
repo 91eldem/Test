@@ -1,31 +1,23 @@
 {
   "name": "Дневник",
   "short_name": "Дневник",
-  "description": "Мобильный дневник расписания Богдана",
+  "description": "Мобильный дневник с расписанием и музыкальным плеером",
   "lang": "ru",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "standalone"
-  ],
-  "orientation": "portrait-primary",
-  "theme_color": "#0b3cff",
+  "orientation": "portrait",
   "background_color": "#050a3a",
-  "categories": [
-    "education",
-    "productivity"
-  ],
+  "theme_color": "#0b3cff",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
